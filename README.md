@@ -1,2 +1,2 @@
-# ClosestCans
-React-native app built to find closest trashcans to dispose of waste. Built for LAHacks
+# CloseCans
+React-native app built to find the closest trash cans to properly dispose waste. Built for LAHacks

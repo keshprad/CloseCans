@@ -19,7 +19,7 @@ function Home(props) {
       <Header noLeft>
         <Left />
         <Body>
-          <Title>Header</Title>
+          <Title>Home</Title>
         </Body>
         <Right />
       </Header>

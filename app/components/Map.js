@@ -12,28 +12,32 @@ const bins = [
       latitude: 37.30757699280724,
       longitude: -122.01661523830575,
     },
-    type: ["trash"],
+    bin_type: ["trash"],
+    upload_time: "Mar 15, 2021",
   },
   {
     coordinates: {
       latitude: 37.30787948833927,
       longitude: -122.01654157463312,
     },
-    type: ["recycling"],
+    bin_type: ["recycling"],
+    upload_time: "Mar 15, 2021",
   },
   {
     coordinates: {
       latitude: 37.30802392271359,
       longitude: -122.01645420609117,
     },
-    type: ["compost"],
+    bin_type: ["compost"],
+    upload_time: "Mar 15, 2021",
   },
   {
     coordinates: {
       latitude: 37.30787948833927,
       longitude: -122.01645420609117,
     },
-    type: ["trash", "recycling"],
+    bin_type: ["trash", "recycling"],
+    upload_time: "Mar 15, 2021",
   },
 ];
 
@@ -77,7 +81,7 @@ function Map(props) {
           <BinMarker
             key={index}
             coordinate={item.coordinates}
-            type={item.type}
+            type={item.bin_type}
             onPress={onMarkerPress}
           ></BinMarker>
         ))}
@@ -92,7 +96,7 @@ function onMarkerPress() {}
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    color: "#fff",
     alignItems: "center",
     justifyContent: "center",
   },

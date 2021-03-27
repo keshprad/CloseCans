@@ -11,6 +11,9 @@ function BinMarker(props) {
   return (
     <Marker coordinate={coordinate} onPress={onPress}>
       {buildIcon(type)}
+      <Callout tooltip>
+        <BinMarkerCallout></BinMarkerCallout>
+      </Callout>
     </Marker>
   );
 }
@@ -43,23 +46,29 @@ const markerIconStyle = {
   borderRadius: 16,
   width: 32,
   height: 32,
-  color: "white",
   textAlign: "center",
   textAlignVertical: "center",
+  borderWidth: 1.0,
 };
 
 const styles = StyleSheet.create({
   trash: {
     ...markerIconStyle,
-    backgroundColor: "purple",
+    backgroundColor: "white",
+    color: "#726a95",
+    borderColor: "#726a95",
   },
   recycling: {
     ...markerIconStyle,
-    backgroundColor: "blue",
+    backgroundColor: "white",
+    color: "#709fb0",
+    borderColor: "#709fb0",
   },
   compost: {
     ...markerIconStyle,
-    backgroundColor: "green",
+    backgroundColor: "white",
+    color: "#a0c1b8",
+    borderColor: "#a0c1b8",
   },
 });
 

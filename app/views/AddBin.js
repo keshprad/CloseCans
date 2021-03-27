@@ -15,7 +15,7 @@ import {
 
 // My Imports
 import { ButtonHeader, CheckButton } from '../components/Components';
-import { _getLocation } from '../helpers/Helper';
+import { _getLocation, backend_domain } from '../helpers/Helper';
 
 const Form = t.form.Form;
 
@@ -23,7 +23,7 @@ export default class AddBin extends Component {
   state = {
     location: {},
     errMsg: '',
-    strLocation: 'Loading...',
+    formValues: { location: 'Loading...' },
     binImg: '',
   };
 
@@ -41,7 +41,9 @@ export default class AddBin extends Component {
 
     // Set state
     this.setState({
-      strLocation: `(${location.coords.latitude}, ${location.coords.longitude})`,
+      formValues: {
+        location: `(${location.coords.latitude}, ${location.coords.longitude})`,
+      },
       errMsg,
       location,
     });
@@ -49,7 +51,17 @@ export default class AddBin extends Component {
 
   submitBin = () => {
     const response = this.form.getValue(); // use that ref to get the form value
-    console.log('value: ', response);
+    const usr_loc = JSON.stringify({
+      longitude: this.state.location.coords.longitude,
+      latitude: this.state.location.coords.latitude,
+    });
+    const bin_types = JSON.stringify({
+      trash: response.trash,
+      recycling: response.recycling,
+      compost: response.compost,
+    });
+    console.log(usr_loc);
+    console.log(bin_types);
     console.log(binImg);
   };
 
@@ -63,7 +75,6 @@ export default class AddBin extends Component {
 
     if (!result.cancelled) {
       binImg = result.uri;
-      console.log(binImg);
     }
   }
 
@@ -72,7 +83,12 @@ export default class AddBin extends Component {
       <Container>
         <ButtonHeader history={this.props.history} title="Add Bin" />
         <Content contentContainerStyle={styles.formContainer}>
-          <Form type={BinFormStructure} ref={this.setForm} />
+          <Form
+            type={BinFormStructure}
+            ref={this.setForm}
+            options={formOptions}
+            value={this.state.formValues}
+          />
           <Button title="Select Image" onPress={this.pickImage}></Button>
           <Button title="Submit Form" onPress={this.submitBin} />
         </Content>
@@ -89,6 +105,14 @@ const BinFormStructure = t.struct({
   recycling: t.Boolean,
   compost: t.Boolean,
 });
+
+const formOptions = {
+  fields: {
+    location: {
+      editable: false,
+    },
+  },
+};
 
 const styles = StyleSheet.create({
   formContainer: {

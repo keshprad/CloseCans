@@ -2,9 +2,8 @@ from pydantic import BaseModel
 
 
 class Location(BaseModel):
-    longitude: float
     latitude: float
-
+    longitude: float
 
 class BinTypes(BaseModel):
     trash: bool = False

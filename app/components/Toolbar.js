@@ -1,8 +1,8 @@
-import React from 'react';
-import { Container, Text } from 'native-base';
-import { Button, Footer, FooterTab } from 'native-base';
+import React from "react";
+import { Container, Icon, Text } from "native-base";
+import { Button, Footer, FooterTab } from "native-base";
 
-import FooterButton from './FooterButton';
+import FooterButton from "./FooterButton";
 
 function Toolbar(props) {
   const { history } = props;
@@ -10,11 +10,21 @@ function Toolbar(props) {
   return (
     <Footer>
       <FooterTab>
-        <FooterButton path="/about" history={history}></FooterButton>
-        <FooterButton path="/info" history={history}></FooterButton>
-        <FooterButton path="/" history={history}></FooterButton>
-        <Button onPress={() => history.push('/')}></Button>
-        <FooterButton path="/add-bin" history={history}></FooterButton>
+        <FooterButton path="/about" history={history}>
+          <Icon type="MaterialCommunityIcons" name="information-variant" />
+        </FooterButton>
+        <FooterButton path="/add-bin" history={history}>
+          <Icon type="Feather" name="plus" />
+        </FooterButton>
+        <FooterButton path="/" history={history}>
+          <Icon type="Ionicons" name="home-outline" />
+        </FooterButton>
+        <Button onPress={() => history.push("/")}>
+          <Icon type="MaterialCommunityIcons" name="magnify" />
+        </Button>
+        <FooterButton path="/info" history={history}>
+          <Icon type="AntDesign" name="questioncircleo" />
+        </FooterButton>
       </FooterTab>
     </Footer>
   );

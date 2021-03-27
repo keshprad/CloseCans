@@ -21,8 +21,7 @@ mycursor = db.cursor()
 def sql_setup():
     create_bins_table = '''
         CREATE TABLE IF NOT EXISTS bins (
-            longitude FLOAT NOT NULL,
-            latitude FLOAT NOT NULL,
+            location POINT NOT NULL,
             bintype VARCHAR(255) NOT NULL,
             img CHAR(38),
             id INTEGER NOT NULL AUTO_INCREMENT,
@@ -53,8 +52,10 @@ def add_bin(usr_loc: str = Form(...), bin_types: str = Form(...), bin_img: Uploa
     usr_loc = json.loads(usr_loc)
     bin_types = json.loads(bin_types)
 
+    
+
     # Insert new bin to bins table
-    sql_insert_bin = "INSERT INTO bins (longitude, latitude, bintype, img) VALUES (%s, %s, %s, %s)"
+    sql_insert_bin = "INSERT INTO bins (location, bintype, img) VALUES (POINT(%s, %s), %s, %s)"
     for bin_type in bin_types.keys():
         if bin_types[bin_type]:
             sql_vals = (usr_loc['longitude'], usr_loc['latitude'], bin_type, 'Test')

@@ -1,3 +1,4 @@
+export { default as BinMarker } from "./BinMarker";
 export { default as ButtonHeader } from "./ButtonHeader";
 export { default as FooterButton } from "./FooterButton";
 export { default as Hyperlink } from "./Hyperlink";

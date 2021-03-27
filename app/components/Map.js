@@ -3,6 +3,32 @@ import MapView from "react-native-maps";
 import { View, StyleSheet, Dimensions } from "react-native";
 import * as Location from "expo-location";
 
+import BinMarker from "./BinMarker";
+
+const bins = [
+  {
+    coordinates: {
+      latitude: 37.30757699280724,
+      longitude: -122.01661523830575,
+    },
+    isRecycle: true,
+  },
+  {
+    coordinates: {
+      latitude: 37.30787948833927,
+      longitude: -122.01654157463312,
+    },
+    isRecycle: false,
+  },
+  {
+    coordinates: {
+      latitude: 37.30802392271359,
+      longitude: -122.01645420609117,
+    },
+    isRecycle: false,
+  },
+];
+
 function Map(props) {
   const [region, setRegion] = useState({
     latitude: 0,
@@ -38,7 +64,15 @@ function Map(props) {
 
   return (
     <View style={styles.container}>
-      <MapView style={styles.map} region={region} />
+      <MapView style={styles.map} region={region}>
+        {bins.map((item, index) => (
+          <BinMarker
+            key={index}
+            coordinate={item.coordinates}
+            isRecycle={item.isRecycle}
+          ></BinMarker>
+        ))}
+      </MapView>
     </View>
   );
 }

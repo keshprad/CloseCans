@@ -1,19 +1,18 @@
-import React from 'react'
-import { Container, Content, Header } from 'native-base';
+import React from "react";
+import { Container, Content, Header } from "native-base";
 
-import { Map, Toolbar } from '../components/Components';
+import { Map, Toolbar } from "../components/Components";
 
 function Home(props) {
-
-    return (
-        <Container>
-            <Header />
-            <Content>
-                <Map />
-            </Content>
-            <Toolbar />
-        </Container>
-    );
+  return (
+    <Container>
+      <Header />
+      <Content>
+        <Map />
+      </Content>
+      <Toolbar />
+    </Container>
+  );
 }
 
 export default Home;

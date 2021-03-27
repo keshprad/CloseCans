@@ -1,12 +1,12 @@
 import React from "react";
 import { Container, Text } from "native-base";
 
-function Map(props) {
+function FooterButton(props) {
   return (
     <Container>
-      <Text>"Map"</Text>
+      <Text>"FooterButton"</Text>
     </Container>
   );
 }
 
-export default Map;
+export default Toolbar;

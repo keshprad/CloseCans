@@ -1,14 +1,14 @@
 import React from "react";
-import { Container, Content, Header, Text } from "native-base";
+import { Container, Content, Text } from "native-base";
 
-import { BackHeader } from "../components/Components";
+import { ButtonHeader } from "../components/Components";
 
 function AddBin(props) {
   const { history } = props;
 
   return (
     <Container>
-      <BackHeader history={history} />
+      <ButtonHeader history={history} title="Add Bin" />
       <Content>
         <Text>This is the AddBin page!</Text>
       </Content>

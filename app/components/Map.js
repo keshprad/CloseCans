@@ -11,21 +11,28 @@ const bins = [
       latitude: 37.30757699280724,
       longitude: -122.01661523830575,
     },
-    isRecycle: true,
+    type: ["trash"],
   },
   {
     coordinates: {
       latitude: 37.30787948833927,
       longitude: -122.01654157463312,
     },
-    isRecycle: false,
+    type: ["recycling"],
   },
   {
     coordinates: {
       latitude: 37.30802392271359,
       longitude: -122.01645420609117,
     },
-    isRecycle: false,
+    type: ["compost"],
+  },
+  {
+    coordinates: {
+      latitude: 37.30787948833927,
+      longitude: -122.01645420609117,
+    },
+    type: ["trash", "recycling"],
   },
 ];
 
@@ -69,7 +76,7 @@ function Map(props) {
           <BinMarker
             key={index}
             coordinate={item.coordinates}
-            isRecycle={item.isRecycle}
+            type={item.type}
           ></BinMarker>
         ))}
       </MapView>

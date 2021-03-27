@@ -10,11 +10,11 @@ function Toolbar(props) {
   return (
     <Footer>
       <FooterTab>
-        <FooterButton></FooterButton>
-        <FooterButton></FooterButton>
-        <FooterButton></FooterButton>
-        <FooterButton></FooterButton>
-        <FooterButton></FooterButton>
+        <FooterButton path="/about" history={history}></FooterButton>
+        <FooterButton path="/info" history={history}></FooterButton>
+        <FooterButton path="/" history={history}></FooterButton>
+        <FooterButton path="/" history={history}></FooterButton>
+        <FooterButton path="/add-bin" history={history}></FooterButton>
       </FooterTab>
     </Footer>
   );

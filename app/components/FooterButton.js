@@ -5,7 +5,10 @@ function FooterButton(props) {
   const { history, path } = props;
 
   return (
-    <Button>
+    <Button
+      active={history.location.pathname === path}
+      onPress={() => history.push(path)}
+    >
       <Text>FB</Text>
     </Button>
   );

@@ -1,11 +1,22 @@
 import React from "react";
 import { Container, Text } from "native-base";
+import { Button, Footer, FooterTab, Icon } from "native-base";
+
+import FooterButton from "./FooterButton";
 
 function Toolbar(props) {
+  const { history } = props;
+
   return (
-    <Container>
-      <Text>Toolbar</Text>
-    </Container>
+    <Footer>
+      <FooterTab>
+        <FooterButton></FooterButton>
+        <FooterButton></FooterButton>
+        <FooterButton></FooterButton>
+        <FooterButton></FooterButton>
+        <FooterButton></FooterButton>
+      </FooterTab>
+    </Footer>
   );
 }
 

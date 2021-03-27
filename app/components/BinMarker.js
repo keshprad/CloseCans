@@ -1,15 +1,21 @@
-import { Badge, Icon, Text, View } from "native-base";
-import { Image, StyleSheet } from "react-native";
-import React from "react";
-import { Marker, Callout } from "react-native-maps";
+import { Badge, Icon, Text, View } from 'native-base';
+import { Image, StyleSheet } from 'react-native';
+import React from 'react';
+import { Marker, Callout } from 'react-native-maps';
 
-import BinMarkerCallout from "./BinMarkerCallout";
+import BinMarkerCallout from './BinMarkerCallout';
 
 function BinMarker(props) {
-  const { type, coordinate, onPress } = props;
+  const { type, coordinate, onMarkerPress } = props;
 
   return (
-    <Marker coordinate={coordinate} onPress={onPress}>
+    <Marker
+      style={styles.container}
+      coordinate={coordinate}
+      onPress={() => {
+        onPress();
+      }}
+    >
       {buildIcon(type)}
       <Callout tooltip>
         <BinMarkerCallout></BinMarkerCallout>
@@ -19,56 +25,60 @@ function BinMarker(props) {
 }
 
 function createLabel(type) {
-  return type.join(", ");
+  return type.join(', ');
 }
 
 function buildIcon(type) {
   switch (type[0]) {
-    case "trash":
-      return <Icon style={styles.trash} name="trash" active={false}></Icon>;
-    case "recycling":
+    case 'trash':
       return (
-        <Icon style={styles.recycling} type="FontAwesome" name="recycle"></Icon>
+        <View style={[styles.trash, styles.iconContainer]}>
+          <Icon style={styles.icon} name="trash" active={false} />
+        </View>
       );
-    case "compost":
+    case 'recycling':
       return (
-        <Icon
-          style={styles.compost}
-          type="MaterialCommunityIcons"
-          name="sprout"
-        ></Icon>
+        <View style={[styles.recycling, styles.iconContainer]}>
+          <Icon style={styles.icon} type="FontAwesome" name="recycle"></Icon>
+        </View>
+      );
+    case 'compost':
+      return (
+        <View style={[styles.compost, styles.iconContainer]}>
+          <Icon
+            style={styles.icon}
+            type="MaterialCommunityIcons"
+            name="sprout"
+          ></Icon>
+        </View>
       );
   }
 }
 
-const markerIconStyle = {
-  fontSize: 18,
-  borderRadius: 16,
-  width: 32,
-  height: 32,
-  textAlign: "center",
-  textAlignVertical: "center",
-  borderWidth: 1.0,
-};
-
 const styles = StyleSheet.create({
-  trash: {
-    ...markerIconStyle,
-    backgroundColor: "white",
-    color: "#726a95",
-    borderColor: "#726a95",
+  container: {
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    overflow: 'hidden',
   },
-  recycling: {
-    ...markerIconStyle,
-    backgroundColor: "white",
-    color: "#709fb0",
-    borderColor: "#709fb0",
+  icon: {
+    color: 'white',
+    fontSize: 18,
+  },
+  iconContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   compost: {
-    ...markerIconStyle,
-    backgroundColor: "white",
-    color: "#a0c1b8",
-    borderColor: "#a0c1b8",
+    backgroundColor: 'green',
+  },
+  trash: {
+    backgroundColor: 'purple',
+  },
+  recycling: {
+    backgroundColor: 'blue',
   },
 });
 

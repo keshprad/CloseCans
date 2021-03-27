@@ -1,6 +1,8 @@
 import React, { Component, useEffect, useState } from 'react';
 import { Button, StyleSheet } from 'react-native';
 import t from 'tcomb-form-native';
+import ImageFactory from 'react-native-image-picker-form';
+import * as ImagePicker from 'expo-image-picker';
 import {
   Container,
   Content,
@@ -22,6 +24,7 @@ export default class AddBin extends Component {
     location: {},
     errMsg: '',
     strLocation: 'Loading...',
+    binImg: '',
   };
 
   constructor(props) {
@@ -30,11 +33,7 @@ export default class AddBin extends Component {
     this.setForm = (element) => {
       this.form = element;
     };
-
-    this.submitBin = () => {
-      const response = this.form.getValue(); // use that ref to get the form value
-      console.log('value: ', response);
-    };
+    this.binImg = '';
   }
 
   async componentDidMount() {
@@ -48,24 +47,47 @@ export default class AddBin extends Component {
     });
   }
 
+  submitBin = () => {
+    const response = this.form.getValue(); // use that ref to get the form value
+    console.log('value: ', response);
+    console.log(binImg);
+  };
+
+  async pickImage() {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    if (!result.cancelled) {
+      binImg = result.uri;
+      console.log(binImg);
+    }
+  }
+
   render() {
     return (
       <Container>
         <ButtonHeader history={this.props.history} title="Add Bin" />
         <Content contentContainerStyle={styles.formContainer}>
-          <Form type={Bin} ref={this.setForm} />
-          <Button title="Add Bin" onPress={this.submitBin} />
+          <Form type={BinFormStructure} ref={this.setForm} />
+          <Button title="Select Image" onPress={this.pickImage}></Button>
+          <Button title="Submit Form" onPress={this.submitBin} />
         </Content>
       </Container>
     );
   }
 }
 
-const Bin = t.struct({
+var binImg = '';
+
+const BinFormStructure = t.struct({
   location: t.String,
-  username: t.String,
-  password: t.String,
-  terms: t.Boolean,
+  trash: t.Boolean,
+  recycling: t.Boolean,
+  compost: t.Boolean,
 });
 
 const styles = StyleSheet.create({
@@ -76,19 +98,3 @@ const styles = StyleSheet.create({
     margin: 10,
   },
 });
-
-// <Form>
-//   <Item stackedLabel>
-//     <Label>Current Location</Label>
-//     <Input placeholder={strLocation} disabled />
-//   </Item>
-//   <Item stackedLabel>
-//     <Label>Types of bins:</Label>
-//     <CheckButton btnDesc="Garbage" />
-//     <CheckButton btnDesc="Recycling" />
-//     <CheckButton btnDesc="Compost" />
-//   </Item>
-//   <Button block style={styles.submitButton} action="Submit">
-//     <Text>Submit</Text>
-//   </Button>
-// </Form>;

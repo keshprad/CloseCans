@@ -1,11 +1,13 @@
-import React from 'react';
-import { Container, Text } from 'native-base';
+import React from "react";
+import { Button, Text } from "native-base";
 
 function FooterButton(props) {
+  const { history, path } = props;
+
   return (
-    <Container>
-      <Text>FooterButton</Text>
-    </Container>
+    <Button>
+      <Text>FB</Text>
+    </Button>
   );
 }
 

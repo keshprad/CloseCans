@@ -1,7 +1,7 @@
-import React from 'react';
-import { Container, Content, Header } from 'native-base';
+import React from "react";
+import { Container, Content, Header } from "native-base";
 
-import { Map, Toolbar } from '../components/Components';
+import { Map, Toolbar } from "../components/Components";
 
 function Home(props) {
   return (
@@ -10,6 +10,7 @@ function Home(props) {
       <Content>
         <Map />
       </Content>
+      <Toolbar></Toolbar>
     </Container>
   );
 }

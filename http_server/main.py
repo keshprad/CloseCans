@@ -1,7 +1,8 @@
-import os
+from fastapi import FastAPI, File, Form, UploadFile, Depends
 from basemodels import Location, BinEntry
 import mysql.connector
-from fastapi import FastAPI
+import os
+import json
 
 app = FastAPI()
 
@@ -48,14 +49,18 @@ def find_bin(usr_loc: Location):
 
 # Not sure how to handle picture. Will figure out later
 @app.post("/add-bin")
-def add_bin(bin_entry: BinEntry):
-    usr_loc, bin_types, img = (bin_entry.usr_loc, bin_entry.bin_types.dict(), bin_entry.img)
+def add_bin(usr_loc: str = Form(...), bin_types: str = Form(...), bin_img: UploadFile = File(...)):
+    usr_loc = json.loads(usr_loc)
+    bin_types = json.loads(bin_types)
 
     # Insert new bin to bins table
     sql_insert_bin = "INSERT INTO bins (longitude, latitude, bintype, img) VALUES (%s, %s, %s, %s)"
     for bin_type in bin_types.keys():
         if bin_types[bin_type]:
-            sql_vals = (usr_loc.longitude, usr_loc.latitude, bin_type, img)
+            sql_vals = (usr_loc['longitude'], usr_loc['latitude'], bin_type, 'Test')
             mycursor.execute(sql_insert_bin, params=sql_vals)
     db.commit()
     return 200
+
+# { "trash": true, "recycling": false, "compost": true, }
+# { "latitude": 0.11, "longitude": 0.12 }

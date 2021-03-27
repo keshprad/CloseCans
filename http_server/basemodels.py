@@ -15,4 +15,3 @@ class BinTypes(BaseModel):
 class BinEntry(BaseModel):
     usr_loc: Location
     bin_types: BinTypes
-    img: str

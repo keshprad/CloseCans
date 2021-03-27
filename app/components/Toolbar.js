@@ -1,8 +1,8 @@
-import React from "react";
-import { Container, Text } from "native-base";
-import { Button, Footer, FooterTab } from "native-base";
+import React from 'react';
+import { Container, Text } from 'native-base';
+import { Button, Footer, FooterTab } from 'native-base';
 
-import FooterButton from "./FooterButton";
+import FooterButton from './FooterButton';
 
 function Toolbar(props) {
   const { history } = props;
@@ -13,7 +13,7 @@ function Toolbar(props) {
         <FooterButton path="/about" history={history}></FooterButton>
         <FooterButton path="/info" history={history}></FooterButton>
         <FooterButton path="/" history={history}></FooterButton>
-        <FooterButton path="/" history={history}></FooterButton>
+        <Button onPress={() => history.push('/')}></Button>
         <FooterButton path="/add-bin" history={history}></FooterButton>
       </FooterTab>
     </Footer>

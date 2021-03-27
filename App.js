@@ -5,7 +5,7 @@ import { Home } from "./app/views/Views";
 
 export default function App() {
   return (
-    <Container style={styles.container}>
+    <Container>
       <Home></Home>
     </Container>
   );

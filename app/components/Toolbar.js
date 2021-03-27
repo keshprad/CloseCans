@@ -4,7 +4,7 @@ import { Container, Text } from "native-base";
 function Toolbar(props) {
   return (
     <Container>
-      <Text>"Toolbar"</Text>
+      <Text>Toolbar</Text>
     </Container>
   );
 }

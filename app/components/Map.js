@@ -4,7 +4,7 @@ import { Container, Text } from "native-base";
 function Map(props) {
   return (
     <Container>
-      <Text>"Map"</Text>
+      <Text>Map</Text>
     </Container>
   );
 }

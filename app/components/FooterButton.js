@@ -4,9 +4,9 @@ import { Container, Text } from "native-base";
 function FooterButton(props) {
   return (
     <Container>
-      <Text>"FooterButton"</Text>
+      <Text>FooterButton</Text>
     </Container>
   );
 }
 
-export default Toolbar;
+export default FooterButton;

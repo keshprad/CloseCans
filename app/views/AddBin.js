@@ -50,8 +50,8 @@ export default class AddBin extends Component {
   submitBin = async () => {
     const formData = this.form.getValue(); // use that ref to get the form value
     const usr_loc = {
-      longitude: this.state.location.coords.longitude,
       latitude: this.state.location.coords.latitude,
+      longitude: this.state.location.coords.longitude,
     };
     const bin_types = {
       trash: formData.trash,
@@ -62,7 +62,6 @@ export default class AddBin extends Component {
       usr_loc: usr_loc,
       bin_types: bin_types,
     });
-    console.log(res.data);
   };
 
   render() {

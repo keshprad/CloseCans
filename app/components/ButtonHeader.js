@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   Container,
   Body,
@@ -8,7 +8,7 @@ import {
   Title,
   Left,
   Right,
-} from 'native-base';
+} from "native-base";
 
 function ButtonHeader(props) {
   const { history, title } = props;
@@ -16,14 +16,16 @@ function ButtonHeader(props) {
   return (
     <Header>
       <Left>
-        <Button transparent onPress={() => history.push('/')}>
+        <Button transparent onPress={() => history.push("/")}>
           <Icon name="arrow-back" />
         </Button>
       </Left>
       <Body>
         <Title>{title}</Title>
       </Body>
-      <Right />
+      <Right>
+        <Icon></Icon>
+      </Right>
     </Header>
   );
 }

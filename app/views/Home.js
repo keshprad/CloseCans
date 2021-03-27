@@ -1,5 +1,13 @@
 import React from "react";
-import { Container, Content, Header } from "native-base";
+import {
+  Container,
+  Content,
+  Header,
+  Left,
+  Body,
+  Title,
+  Right,
+} from "native-base";
 
 import { Map, Toolbar } from "../components/Components";
 
@@ -8,7 +16,13 @@ function Home(props) {
 
   return (
     <Container>
-      <Header />
+      <Header noLeft>
+        <Left />
+        <Body>
+          <Title>Header</Title>
+        </Body>
+        <Right />
+      </Header>
       <Content>
         <Map />
       </Content>

@@ -1,5 +1,5 @@
 import os
-from basemodels import Location
+from basemodels import Location, BinEntry
 import mysql.connector
 from fastapi import FastAPI
 
@@ -19,14 +19,13 @@ mycursor = db.cursor()
 
 def sql_setup():
     create_bins_table = '''
-        CREATE TABLE IF NOT EXISTS `bins` (
-            `longitude` FLOAT NOT NULL,
-            `latitude` FLOAT NOT NULL,
-            `recycle` BIT NOT NULL,
-            `trash` BIT NOT NULL,
-            `compost` BIT NOT NULL,
-            `img` LONGBLOB,
-            PRIMARY KEY (longitude, latitude)
+        CREATE TABLE IF NOT EXISTS bins (
+            longitude FLOAT NOT NULL,
+            latitude FLOAT NOT NULL,
+            bintype VARCHAR(255) NOT NULL,
+            img CHAR(38),
+            id INTEGER NOT NULL AUTO_INCREMENT,
+            PRIMARY KEY (id)
         ) DEFAULT CHARSET = utf8;
     '''
     mycursor.execute(create_bins_table)
@@ -49,5 +48,14 @@ def find_bin(usr_loc: Location):
 
 # Not sure how to handle picture. Will figure out later
 @app.post("/add-bin")
-def add_bin(usr_loc: Location, bin_types: list, picture: str):
-    return
+def add_bin(bin_entry: BinEntry):
+    usr_loc, bin_types, img = (bin_entry.usr_loc, bin_entry.bin_types.dict(), bin_entry.img)
+
+    # Insert new bin to bins table
+    sql_insert_bin = "INSERT INTO bins (longitude, latitude, bintype, img) VALUES (%s, %s, %s, %s)"
+    for bin_type in bin_types.keys():
+        if bin_types[bin_type]:
+            sql_vals = (usr_loc.longitude, usr_loc.latitude, bin_type, img)
+            mycursor.execute(sql_insert_bin, params=sql_vals)
+    db.commit()
+    return 200

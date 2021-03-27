@@ -56,6 +56,9 @@ const styles = StyleSheet.create({
   },
   socialsContainer: {
     flexDirection: 'row',
+    position: 'absolute',
+    alignItems: 'center',
+    bottom: 0,
   },
   text: {
     textAlign: 'center',

@@ -1,6 +1,5 @@
 import os
-from pydantic import BaseModel
-from typing import Optional
+from basemodels import Location
 import mysql.connector
 from fastapi import FastAPI
 
@@ -13,38 +12,42 @@ db = mysql.connector.connect(
     host="localhost",
     user=USER,
     password=PASSWORD,
-    database = "close_cans"
+    database="close_cans"
 )
 mycursor = db.cursor()
-def sql_setup():
 
-    setup = '''
-        CREATE TABLE IF NOT EXISTS `close_cans` (
+
+def sql_setup():
+    create_bins_table = '''
+        CREATE TABLE IF NOT EXISTS `bins` (
             `longitude` FLOAT NOT NULL,
             `latitude` FLOAT NOT NULL,
             `recycle` BIT NOT NULL,
             `trash` BIT NOT NULL,
             `compost` BIT NOT NULL,
-            'img' LONGBLOB 
+            `img` LONGBLOB,
             PRIMARY KEY (longitude, latitude)
         ) DEFAULT CHARSET = utf8;
     '''
-
-class Location(BaseModel):
-    longitude: float
-    latitude: float
+    mycursor.execute(create_bins_table)
+    print("Tables are ready!")
+sql_setup()
 
 
 @app.post("/bins")
-def find_bin(user: Location):
-    user_loc = user_loc.dict()
+def find_bin(usr_loc: Location):
+    usr_loc = usr_loc.dict()
 
-    possible_locs = mycursor.execute("SELECT * FROM close_cans")
+    possible_locs = mycursor.execute("SELECT * FROM bins")
 
-   
-    for(possible :possible_locs)
-        command = "SELECT geography::Point(user['latitude'], user['latitude'], 4326).STDistance(geography::Point(LATITUDE_2, LONGITUDE_2, 4326)")
-        if(mycursor.execute(command)){
-            #addtolist
-        }
+    # for(possible :possible_locs)
+    #     command = "SELECT geography::Point(user['latitude'], user['latitude'], 4326).STDistance(geography::Point(LATITUDE_2, LONGITUDE_2, 4326)")
+    #     if(mycursor.execute(command)){
+    #         #addtolist
+    #     }
 
+
+# Not sure how to handle picture. Will figure out later
+@app.post("/add-bin")
+def add_bin(usr_loc: Location, bin_types: list, picture: str):
+    return

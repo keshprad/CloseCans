@@ -14,3 +14,12 @@ web-build/
 
 # VSCode
 .vscode/
+
+# PyCharm
+.idea/
+
+# Python
+__pycache__/
+
+# Virtual env for http server
+venv/

@@ -10,10 +10,11 @@ import {
   Text,
   View,
 } from 'native-base';
+const axios = require('axios');
 
 // My Imports
 import { ButtonHeader, CheckButton } from '../components/Components';
-import { _getLocation } from '../helpers/Helper';
+import { _getLocation, backend_domain } from '../helpers/Helper';
 
 const Form = t.form.Form;
 
@@ -21,7 +22,8 @@ export default class AddBin extends Component {
   state = {
     location: {},
     errMsg: '',
-    strLocation: 'Loading...',
+    formValues: { location: 'Loading...' },
+    binImg: '',
   };
 
   constructor(props) {
@@ -30,11 +32,6 @@ export default class AddBin extends Component {
     this.setForm = (element) => {
       this.form = element;
     };
-
-    this.submitBin = () => {
-      const response = this.form.getValue(); // use that ref to get the form value
-      console.log('value: ', response);
-    };
   }
 
   async componentDidMount() {
@@ -42,31 +39,64 @@ export default class AddBin extends Component {
 
     // Set state
     this.setState({
-      strLocation: `(${location.coords.latitude}, ${location.coords.longitude})`,
+      formValues: {
+        location: `(${location.coords.latitude}, ${location.coords.longitude})`,
+      },
       errMsg,
       location,
     });
   }
+
+  submitBin = async () => {
+    const formData = this.form.getValue(); // use that ref to get the form value
+    const usr_loc = {
+      longitude: this.state.location.coords.longitude,
+      latitude: this.state.location.coords.latitude,
+    };
+    const bin_types = {
+      trash: formData.trash,
+      recycling: formData.recycling,
+      compost: formData.compost,
+    };
+    const res = await axios.post(`${backend_domain}/add-bin`, {
+      usr_loc: usr_loc,
+      bin_types: bin_types,
+    });
+    console.log(res.data);
+  };
 
   render() {
     return (
       <Container>
         <ButtonHeader history={this.props.history} title="Add Bin" />
         <Content contentContainerStyle={styles.formContainer}>
-          <Form type={Bin} ref={this.setForm} />
-          <Button title="Add Bin" onPress={this.submitBin} />
+          <Form
+            type={BinFormStructure}
+            ref={this.setForm}
+            options={formOptions}
+            value={this.state.formValues}
+          />
+          <Button title="Submit Form" onPress={this.submitBin} />
         </Content>
       </Container>
     );
   }
 }
 
-const Bin = t.struct({
+const BinFormStructure = t.struct({
   location: t.String,
-  username: t.String,
-  password: t.String,
-  terms: t.Boolean,
+  trash: t.Boolean,
+  recycling: t.Boolean,
+  compost: t.Boolean,
 });
+
+const formOptions = {
+  fields: {
+    location: {
+      editable: false,
+    },
+  },
+};
 
 const styles = StyleSheet.create({
   formContainer: {
@@ -76,19 +106,3 @@ const styles = StyleSheet.create({
     margin: 10,
   },
 });
-
-// <Form>
-//   <Item stackedLabel>
-//     <Label>Current Location</Label>
-//     <Input placeholder={strLocation} disabled />
-//   </Item>
-//   <Item stackedLabel>
-//     <Label>Types of bins:</Label>
-//     <CheckButton btnDesc="Garbage" />
-//     <CheckButton btnDesc="Recycling" />
-//     <CheckButton btnDesc="Compost" />
-//   </Item>
-//   <Button block style={styles.submitButton} action="Submit">
-//     <Text>Submit</Text>
-//   </Button>
-// </Form>;

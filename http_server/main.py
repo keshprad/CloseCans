@@ -21,10 +21,9 @@ mycursor = db.cursor()
 def sql_setup():
     create_bins_table = '''
         CREATE TABLE IF NOT EXISTS bins (
-            longitude FLOAT NOT NULL,
-            latitude FLOAT NOT NULL,
+            location POINT NOT NULL,
             bintype VARCHAR(255) NOT NULL,
-            img CHAR(38),
+            date DATETIME NOT NULL DEFAULT NOW(),
             id INTEGER NOT NULL AUTO_INCREMENT,
             PRIMARY KEY (id)
         ) DEFAULT CHARSET = utf8;
@@ -45,22 +44,19 @@ def find_bin(usr_loc: Location):
     #     if(mycursor.execute(command)){
     #         #addtolist
     #     }
+    markers = [{}, {}, {}]
 
 
 # Not sure how to handle picture. Will figure out later
 @app.post("/add-bin")
-def add_bin(usr_loc: str = Form(...), bin_types: str = Form(...), bin_img: UploadFile = File(...)):
-    usr_loc = json.loads(usr_loc)
-    bin_types = json.loads(bin_types)
+def add_bin(bin_entry: BinEntry):
+    usr_loc, bin_types = bin_entry.usr_loc, bin_entry.bin_types.dict()
 
     # Insert new bin to bins table
-    sql_insert_bin = "INSERT INTO bins (longitude, latitude, bintype, img) VALUES (%s, %s, %s, %s)"
+    sql_insert_bin = "INSERT INTO bins (location, bintype) VALUES (POINT(%s, %s), %s)"
     for bin_type in bin_types.keys():
         if bin_types[bin_type]:
-            sql_vals = (usr_loc['longitude'], usr_loc['latitude'], bin_type, 'Test')
+            sql_vals = (usr_loc.longitude, usr_loc.latitude, bin_type)
             mycursor.execute(sql_insert_bin, params=sql_vals)
     db.commit()
     return 200
-
-# { "trash": true, "recycling": false, "compost": true, }
-# { "latitude": 0.11, "longitude": 0.12 }

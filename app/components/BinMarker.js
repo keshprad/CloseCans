@@ -1,13 +1,15 @@
-import { Icon, Text } from "native-base";
+import { Badge, Icon, Text, View } from "native-base";
 import { Image, StyleSheet } from "react-native";
 import React from "react";
 import { Marker, Callout } from "react-native-maps";
 
+import BinMarkerCallout from "./BinMarkerCallout";
+
 function BinMarker(props) {
-  const { type, coordinate } = props;
+  const { type, coordinate, onPress } = props;
 
   return (
-    <Marker coordinate={coordinate} title={createLabel(type)}>
+    <Marker coordinate={coordinate} onPress={onPress}>
       {buildIcon(type)}
     </Marker>
   );
@@ -20,31 +22,44 @@ function createLabel(type) {
 function buildIcon(type) {
   switch (type[0]) {
     case "trash":
-      return <Icon style={styles.normal} type="Ionicons" name="trash"></Icon>;
+      return <Icon style={styles.trash} name="trash" active={false}></Icon>;
     case "recycling":
       return (
-        <Icon
-          style={styles.recycling}
-          type="MaterialCommunityIcons"
-          name="recycle"
-        ></Icon>
+        <Icon style={styles.recycling} type="FontAwesome" name="recycle"></Icon>
       );
     case "compost":
       return (
-        <Icon style={styles.compost} type="Ionicons" name="trash-bin"></Icon>
+        <Icon
+          style={styles.compost}
+          type="MaterialCommunityIcons"
+          name="sprout"
+        ></Icon>
       );
   }
 }
 
+const markerIconStyle = {
+  fontSize: 18,
+  borderRadius: 16,
+  width: 32,
+  height: 32,
+  color: "white",
+  textAlign: "center",
+  textAlignVertical: "center",
+};
+
 const styles = StyleSheet.create({
-  normal: {
-    color: "purple",
+  trash: {
+    ...markerIconStyle,
+    backgroundColor: "purple",
   },
   recycling: {
-    color: "blue",
+    ...markerIconStyle,
+    backgroundColor: "blue",
   },
   compost: {
-    color: "green",
+    ...markerIconStyle,
+    backgroundColor: "green",
   },
 });
 

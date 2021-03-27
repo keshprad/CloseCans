@@ -4,6 +4,7 @@ import { View, StyleSheet, Dimensions } from "react-native";
 import * as Location from "expo-location";
 
 import BinMarker from "./BinMarker";
+import BinMarkerCallout from "./BinMarkerCallout";
 
 const bins = [
   {
@@ -77,12 +78,16 @@ function Map(props) {
             key={index}
             coordinate={item.coordinates}
             type={item.type}
+            onPress={onMarkerPress}
           ></BinMarker>
         ))}
       </MapView>
+      <BinMarkerCallout style={styles.popup}></BinMarkerCallout>
     </View>
   );
 }
+
+function onMarkerPress() {}
 
 const styles = StyleSheet.create({
   container: {

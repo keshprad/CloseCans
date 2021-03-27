@@ -1,8 +1,6 @@
 import React, { Component, useEffect, useState } from 'react';
 import { Button, StyleSheet } from 'react-native';
 import t from 'tcomb-form-native';
-import ImageFactory from 'react-native-image-picker-form';
-import * as ImagePicker from 'expo-image-picker';
 import {
   Container,
   Content,
@@ -12,6 +10,7 @@ import {
   Text,
   View,
 } from 'native-base';
+const axios = require('axios');
 
 // My Imports
 import { ButtonHeader, CheckButton } from '../components/Components';
@@ -33,7 +32,6 @@ export default class AddBin extends Component {
     this.setForm = (element) => {
       this.form = element;
     };
-    this.binImg = '';
   }
 
   async componentDidMount() {
@@ -49,34 +47,23 @@ export default class AddBin extends Component {
     });
   }
 
-  submitBin = () => {
-    const response = this.form.getValue(); // use that ref to get the form value
-    const usr_loc = JSON.stringify({
+  submitBin = async () => {
+    const formData = this.form.getValue(); // use that ref to get the form value
+    const usr_loc = {
       longitude: this.state.location.coords.longitude,
       latitude: this.state.location.coords.latitude,
+    };
+    const bin_types = {
+      trash: formData.trash,
+      recycling: formData.recycling,
+      compost: formData.compost,
+    };
+    const res = await axios.post(`${backend_domain}/add-bin`, {
+      usr_loc: usr_loc,
+      bin_types: bin_types,
     });
-    const bin_types = JSON.stringify({
-      trash: response.trash,
-      recycling: response.recycling,
-      compost: response.compost,
-    });
-    console.log(usr_loc);
-    console.log(bin_types);
-    console.log(binImg);
+    console.log(res.data);
   };
-
-  async pickImage() {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
-
-    if (!result.cancelled) {
-      binImg = result.uri;
-    }
-  }
 
   render() {
     return (
@@ -89,15 +76,12 @@ export default class AddBin extends Component {
             options={formOptions}
             value={this.state.formValues}
           />
-          <Button title="Select Image" onPress={this.pickImage}></Button>
           <Button title="Submit Form" onPress={this.submitBin} />
         </Content>
       </Container>
     );
   }
 }
-
-var binImg = '';
 
 const BinFormStructure = t.struct({
   location: t.String,

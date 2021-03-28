@@ -22,7 +22,7 @@ function BinMarkerCallout(props) {
         <CardItem header bordered style={[styles.roundBorder]}>
           <View flexDirection="column">
             <Text style={styles.headerText}>{createTypeLabel(type)}</Text>
-            <Text style={styles.bodyText}>{distance} Ft Away</Text>
+            <Text style={styles.bodyText}>{distance} Feet Away</Text>
           </View>
           <Left></Left>
           <Body></Body>
@@ -37,10 +37,11 @@ function BinMarkerCallout(props) {
           </Right>
         </CardItem>
         <CardItem bordered style={[styles.roundBorder]}>
-          <Left>
+          <View flexDirection="row">
             <Text style={[styles.bodyText, { color: "gray" }]}>UPDATED</Text>
+            <View width={8}></View>
             <Text style={styles.bodyText}>{createTimeLabel(uploadTime)}</Text>
-          </Left>
+          </View>
           <Right>
             {/* <Button
               transparent

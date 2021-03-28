@@ -24,7 +24,7 @@ function Home(props) {
         <Right />
       </Header>
       <Content>
-        <Map />
+        <Map history={history} />
       </Content>
       <Toolbar history={history}></Toolbar>
     </Container>

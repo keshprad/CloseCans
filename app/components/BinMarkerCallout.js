@@ -1,37 +1,72 @@
 import { Image, StyleSheet, Dimensions } from "react-native";
 import {
-  Container,
-  Header,
-  Content,
+  Body,
+  Icon,
   Card,
   CardItem,
-  Thumbnail,
-  Text,
-  Button,
-  Icon,
   Left,
   Right,
-  Body,
+  Text,
   View,
+  Button,
 } from "native-base";
 import React from "react";
+import colors from "../styles/colors";
 
 function BinMarkerCallout(props) {
+  const { type, uploadTime, onClosePress, distance } = props;
+
   return (
     <View>
-      <View style={styles.bubble}>
-        <Text style={styles.text}>Text</Text>
-        <Text style={styles.text}>More Text</Text>
-      </View>
-      <View style={styles.arrowBorder} />
-      <View style={styles.arrow} />
+      <Card style={[styles.bubble, styles.roundBorder]}>
+        <CardItem header bordered style={[styles.roundBorder]}>
+          <Left>
+            <Text style={styles.headerText}>{createTypeLabel(type)}</Text>
+            <Text>{distance} Feet Away</Text>
+          </Left>
+          <Right>
+            <Button transparent onPress={onClosePress}>
+              <Icon
+                type="MaterialIcons"
+                name="close"
+                style={{ color: "gray" }}
+              />
+            </Button>
+          </Right>
+        </CardItem>
+        <CardItem bordered style={[styles.roundBorder]}>
+          <Left>
+            <Text style={[styles.bodyText, { color: "gray" }]}>UPDATED</Text>
+            <Text style={styles.bodyText}>{createTimeLabel(uploadTime)}</Text>
+          </Left>
+          <Right>
+            <Button
+              transparent
+              onPress={() =>
+                alert("Are you certain the bin you found does not exist?")
+              }
+            >
+              <Text style={[styles.bodyText, { color: "red" }]}>Report</Text>
+            </Button>
+          </Right>
+        </CardItem>
+      </Card>
+      {/* <View style={styles.arrowBorder} />
+      <View style={styles.arrow} /> */}
     </View>
   );
 }
 
+function createTypeLabel(type) {
+  return (type !== undefined ? type.join(", ") : "").toUpperCase();
+}
+
+function createTimeLabel(uploadTime) {
+  return uploadTime !== undefined ? uploadTime : "Not Available";
+}
+
 const styles = StyleSheet.create({
   arrow: {
-    color: "transparent",
     borderColor: "transparent",
     borderTopColor: "white",
     borderWidth: 16,
@@ -39,25 +74,25 @@ const styles = StyleSheet.create({
     marginTop: -32,
   },
   arrowBorder: {
-    color: "transparent",
     borderColor: "transparent",
+
     borderWidth: 16,
     alignSelf: "center",
-    marginTop: -0.5,
+    marginTop: -1.0,
+  },
+  roundBorder: {
+    borderRadius: 8,
   },
   bubble: {
-    flexDirection: "row",
-    alignSelf: "flex-start",
-    color: "white",
-    borderRadius: 8,
-    borderColor: "transparent",
-    borderWidth: 0.5,
-    padding: 16,
+    flexDirection: "column",
     width: Dimensions.get("window").width - 32,
   },
-  text: {
-    fontSize: 16,
-    marginBottom: 5,
+  headerText: {
+    fontSize: 18,
+    fontWeight: "bold",
+  },
+  bodyText: {
+    fontSize: 14,
   },
 });
 

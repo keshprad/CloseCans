@@ -1,52 +1,48 @@
-import { Badge, Icon, Text, View } from 'native-base';
-import { Image, StyleSheet } from 'react-native';
-import React from 'react';
-import { Marker, Callout } from 'react-native-maps';
+import { Badge, Icon, Text, View } from "native-base";
+import { Image, StyleSheet } from "react-native";
+import React from "react";
+import { Marker, Callout } from "react-native-maps";
 
-import BinMarkerCallout from './BinMarkerCallout';
+import BinMarkerCallout from "./BinMarkerCallout";
+import colors from "../styles/colors";
 
 function BinMarker(props) {
-  const { type, coordinate, onMarkerPress } = props;
+  const { type, coordinate, onPress } = props;
 
   return (
-    <Marker
-      style={styles.container}
-      coordinate={coordinate}
-      onPress={() => {
-        onPress();
-      }}
-    >
+    <Marker style={styles.marker} coordinate={coordinate} onPress={onPress}>
       {buildIcon(type)}
-      <Callout tooltip>
-        <BinMarkerCallout></BinMarkerCallout>
-      </Callout>
     </Marker>
   );
 }
 
-function createLabel(type) {
-  return type.join(', ');
-}
-
 function buildIcon(type) {
   switch (type[0]) {
-    case 'trash':
+    case "trash":
       return (
-        <View style={[styles.trash, styles.iconContainer]}>
-          <Icon style={styles.icon} name="trash" active={false} />
-        </View>
-      );
-    case 'recycling':
-      return (
-        <View style={[styles.recycling, styles.iconContainer]}>
-          <Icon style={styles.icon} type="FontAwesome" name="recycle"></Icon>
-        </View>
-      );
-    case 'compost':
-      return (
-        <View style={[styles.compost, styles.iconContainer]}>
+        <View style={[styles.iconContainer, styles.trash]}>
           <Icon
-            style={styles.icon}
+            style={[styles.icon, styles.trash]}
+            type="Ionicons"
+            name="trash"
+          ></Icon>
+        </View>
+      );
+    case "recycling":
+      return (
+        <View style={[styles.iconContainer, styles.recycling]}>
+          <Icon
+            style={[styles.icon, styles.recycling]}
+            type="FontAwesome"
+            name="recycle"
+          ></Icon>
+        </View>
+      );
+    case "compost":
+      return (
+        <View style={[styles.iconContainer, styles.compost]}>
+          <Icon
+            style={[styles.icon, styles.compost]}
             type="MaterialCommunityIcons"
             name="sprout"
           ></Icon>
@@ -56,29 +52,32 @@ function buildIcon(type) {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    width: 32,
-    height: 32,
-    borderRadius: 16,
-    overflow: 'hidden',
+  marker: {},
+  iconContainer: {
+    backgroundColor: "white",
+    borderRadius: 18,
+    width: 36,
+    height: 36,
+    alignItems: "center",
+    justifyContent: "center",
+    borderWidth: 4.0,
   },
   icon: {
-    color: 'white',
-    fontSize: 18,
-  },
-  iconContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  compost: {
-    backgroundColor: 'green',
+    fontSize: 20,
+    textAlign: "center",
+    textAlignVertical: "center",
   },
   trash: {
-    backgroundColor: 'purple',
+    color: colors.trash,
+    borderColor: colors.trash,
   },
   recycling: {
-    backgroundColor: 'blue',
+    color: colors.recycling,
+    borderColor: colors.recycling,
+  },
+  compost: {
+    color: colors.compost,
+    borderColor: colors.compost,
   },
 });
 

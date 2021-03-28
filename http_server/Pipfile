@@ -5,9 +5,11 @@ name = "pypi"
 
 [packages]
 fastapi = "*"
-mysql-connector-python = "*"
+mysql-connector-python = "==8.0.5"
 uvicorn = "*"
 gunicorn = "*"
+uvloop = "*"
+httptools = "*"
 
 [dev-packages]
 

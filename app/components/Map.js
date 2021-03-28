@@ -170,27 +170,31 @@ function Map(props) {
   );
 
   if (history.location.search === "?c=1") {
-    let item = bins[closestBinIndex];
+    if (bins.length <= 0) {
+      alert("No bins nearby!");
+    } else {
+      let item = bins[closestBinIndex];
 
-    setCameraRegion({
-      latitude: item.latitude,
-      longitude: item.longitude,
-      latitudeDelta: region.latitudeDelta,
-      longitudeDelta: region.longitudeDelta,
-    });
-
-    setPressedBin({
-      coordinate: {
+      setCameraRegion({
         latitude: item.latitude,
         longitude: item.longitude,
-      },
-      binType: item.binType,
-      uploadTime: item.uploadTime,
-    });
+        latitudeDelta: region.latitudeDelta,
+        longitudeDelta: region.longitudeDelta,
+      });
 
-    fadeIn();
+      setPressedBin({
+        coordinate: {
+          latitude: item.latitude,
+          longitude: item.longitude,
+        },
+        binType: item.binType,
+        uploadTime: item.uploadTime,
+      });
 
-    history.location.search = null;
+      fadeIn();
+
+      history.location.search = null;
+    }
   }
 
   return view;

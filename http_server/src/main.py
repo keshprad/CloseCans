@@ -18,14 +18,15 @@ USER = os.environ.get('SQL_USER')
 PASSWORD = os.environ.get('SQL_PASS')
 # Connect to db
 db = mysql.connector.connect(
-    host="35.236.122.0",
+    # host="35.236.122.0",
+    host="localhost",
     user=USER,
     password=PASSWORD,
     database="close_cans",
-    client_flags=[ClientFlag.SSL],
-    ssl_ca='ssl/server-ca.pem',
-    ssl_cert='ssl/client-cert.pem',
-    ssl_key='ssl/client-key.pem'
+    # client_flags=[ClientFlag.SSL],
+    # ssl_ca='ssl/server-ca.pem',
+    # ssl_cert='ssl/client-cert.pem',
+    # ssl_key='ssl/client-key.pem'
 )
 mycursor = db.cursor()
 

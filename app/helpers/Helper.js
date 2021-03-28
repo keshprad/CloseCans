@@ -1,7 +1,8 @@
-import * as Location from 'expo-location';
+import * as Location from "expo-location";
 
 export const backend_domain =
-  'https://close-cans-service-o5ls7lw73a-uw.a.run.app';
+  // 'https://close-cans-service-o5ls7lw73a-uw.a.run.app';
+  "http://localhost:8000";
 
 export const calculateDistance = (coordinate1, coordinate2) => {
   const R = 6371e3; // metres
@@ -24,12 +25,12 @@ export const _getLocation = async (locPermission) => {
   let { status } = await Location.requestPermissionsAsync();
   let loc = {
     location: {},
-    errMsg: '',
+    errMsg: "",
   };
 
   // Can only get location if permission granted
-  if (status !== 'granted') {
-    loc.errMsg = 'LOCATION PERMISSIONS DENIED';
+  if (status !== "granted") {
+    loc.errMsg = "LOCATION PERMISSIONS DENIED";
   } else {
     const location = await Location.getCurrentPositionAsync({
       accuracy: Location.Accuracy.High,

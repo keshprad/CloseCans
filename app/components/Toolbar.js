@@ -18,7 +18,11 @@ function Toolbar(props) {
         <FooterButton path="/" history={history}>
           <Icon type="Ionicons" name="home-outline" />
         </FooterButton>
-        <Button onPress={() => history.push("/")}>
+        <Button
+          onPress={() => {
+            history.push("/?c=1");
+          }}
+        >
           <Icon type="MaterialCommunityIcons" name="magnify" />
         </Button>
         <FooterButton path="/info" history={history}>

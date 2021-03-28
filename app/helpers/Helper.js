@@ -1,7 +1,8 @@
 import * as Location from 'expo-location';
 
 export const backend_domain =
-  'https://close-cans-service-o5ls7lw73a-uw.a.run.app';
+  // 'https://close-cans-service-o5ls7lw73a-uw.a.run.app';
+  'http://localhost:8000';
 
 export const calculateDistance = (coordinate1, coordinate2) => {
   const R = 6371e3; // metres

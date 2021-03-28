@@ -1,67 +1,17 @@
-const axios = require("axios");
+const axios = require('axios');
 
-import React, { createRef, useState, useEffect, useRef } from "react";
-import MapView from "react-native-maps";
-import { Animated, Platform, View, StyleSheet, Dimensions } from "react-native";
-import * as Location from "expo-location";
+import React, { createRef, useState, useEffect, useRef } from 'react';
+import MapView from 'react-native-maps';
+import { Animated, Platform, View, StyleSheet, Dimensions } from 'react-native';
+import * as Location from 'expo-location';
 
-import BinMarker from "./BinMarker";
-import BinMarkerCallout from "./BinMarkerCallout";
+import BinMarker from './BinMarker';
+import BinMarkerCallout from './BinMarkerCallout';
 
-import { backend_domain, calculateDistance } from "../helpers/Helper";
-
-const sample_bins = [
-  {
-    coordinates: {
-      latitude: 0,
-      longitude: 0,
-    },
-    binType: ["trash"],
-    uploadTime: "Mar 15, 2021",
-  },
-  {
-    coordinates: {
-      latitude: 37.30757699280724,
-      longitude: -122.01661523830575,
-    },
-    binType: ["trash"],
-    uploadTime: "Mar 15, 2021",
-  },
-  {
-    coordinates: {
-      latitude: 37.30755699280724,
-      longitude: -122.01661623830575,
-    },
-    binType: ["trash", "recycling", "compost"],
-    uploadTime: "Mar 15, 2021",
-  },
-  {
-    coordinates: {
-      latitude: 37.30787948833927,
-      longitude: -122.01654157463312,
-    },
-    binType: ["recycling"],
-    uploadTime: "Mar 15, 2021",
-  },
-  {
-    coordinates: {
-      latitude: 37.30802392271359,
-      longitude: -122.01645420609117,
-    },
-    binType: ["compost"],
-    uploadTime: "Mar 15, 2021",
-  },
-  {
-    coordinates: {
-      latitude: 37.30787948833927,
-      longitude: -122.01645420609117,
-    },
-    binType: ["trash", "recycling"],
-    uploadTime: "Mar 15, 2021",
-  },
-];
+import { backend_domain, calculateDistance } from '../helpers/Helper';
 
 function Map(props) {
+  const [bins, setBins] = useState([]);
   const [region, setRegion] = useState({
     latitude: 0,
     longitude: 0,
@@ -79,8 +29,8 @@ function Map(props) {
       latitude: 0,
       longitude: 0,
     },
-    binType: ["trash"],
-    uploadTime: "Not Available",
+    binType: ['trash'],
+    uploadTime: 'Not Available',
   });
 
   const _map = createRef();
@@ -106,8 +56,8 @@ function Map(props) {
     (async () => {
       let { status } = await Location.requestPermissionsAsync();
       // Can only get location if permission granted
-      if (status !== "granted") {
-        console.log("LOCATION PERMISSIONS DENIED");
+      if (status !== 'granted') {
+        console.log('LOCATION PERMISSIONS DENIED');
       } else {
         Location.watchPositionAsync(
           {
@@ -130,13 +80,11 @@ function Map(props) {
             });
           }
         );
-
-        const bins = (
-          await axios.post(`${backend_domain}/bins`, {
-            latitude: region.latitude,
-            longitude: region.longitude,
-          })
-        ).data;
+        const binsResp = await axios.post(`${backend_domain}/bins`, {
+          latitude: region.latitude,
+          longitude: region.longitude,
+        });
+        setBins(binsResp.data);
       }
     })();
   }, []);
@@ -149,25 +97,23 @@ function Map(props) {
         ref={_map}
         showsUserLocation
       >
-        {sample_bins.map((item, index) => (
+        {bins.map((item, index) => (
           <BinMarker
             key={index}
-            coordinate={item.coordinates}
+            coordinate={{ latitude: item.latitude, longitude: item.longitude }}
             type={item.binType}
             onPress={(e) => {
-              console.log(cameraRegion);
-
               setCameraRegion({
-                latitude: item.coordinates.latitude,
-                longitude: item.coordinates.longitude,
+                latitude: item.latitude,
+                longitude: item.longitude,
                 latitudeDelta: region.latitudeDelta,
                 longitudeDelta: region.longitudeDelta,
               });
 
               setPressedBin({
                 coordinate: {
-                  latitude: item.coordinates.latitude,
-                  longitude: item.coordinates.longitude,
+                  latitude: item.latitude,
+                  longitude: item.longitude,
                 },
                 binType: item.binType,
                 uploadTime: item.uploadTime,
@@ -206,26 +152,26 @@ function Map(props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    color: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
+    color: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   map: {
-    width: Dimensions.get("window").width,
+    width: Dimensions.get('window').width,
     height:
-      Platform.OS === "ios"
-        ? Dimensions.get("window").height - 200
-        : Dimensions.get("window").height - 132,
+      Platform.OS === 'ios'
+        ? Dimensions.get('window').height - 200
+        : Dimensions.get('window').height - 132,
   },
   roundBorder: {
     borderRadius: 8,
   },
   float: {
-    position: "absolute",
+    position: 'absolute',
     top:
-      Platform.OS === "ios"
-        ? Dimensions.get("window").height - 360
-        : Dimensions.get("window").height - 300,
+      Platform.OS === 'ios'
+        ? Dimensions.get('window').height - 360
+        : Dimensions.get('window').height - 300,
   },
 });
 

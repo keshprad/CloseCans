@@ -84,11 +84,11 @@ def find_bin(usr_loc: Location):
             response[key] = {
                 "latitude": latitude,
                 "longitude": longitude,
-                "bin_type": [bin_type],
-                "upload_time": f"{calendar.month_name[date.month]} {date.day}, {date.year}"
+                "binType": [bin_type],
+                "uploadTime": f"{calendar.month_name[date.month]} {date.day}, {date.year}"
             }
         else:
-            response[key]['bin_type'].append(bin_type)
+            response[key]['binType'].append(bin_type)
 
     return list(response.values())
 

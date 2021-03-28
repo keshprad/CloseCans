@@ -19,11 +19,7 @@ PASSWORD = os.environ.get('SQL_PASS')
 # Connect to db
 db = mysql.connector.connect(
     # host="35.236.122.0",
-<<<<<<< HEAD
-    host="localhost",
-=======
     host='localhost',
->>>>>>> 6a5d7719b600076f1d637d9c897f0cc2c8805929
     user=USER,
     password=PASSWORD,
     database="close_cans",

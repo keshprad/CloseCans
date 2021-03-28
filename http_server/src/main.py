@@ -1,12 +1,18 @@
-from fastapi import FastAPI, File, Form, UploadFile, Depends
-from basemodels import Location, BinEntry
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+from src.basemodels import Location, BinEntry
 import mysql.connector
 import os
-import json
 import calendar
 
 app = FastAPI()
-
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=['*'],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 USER = os.environ.get('SQL_USER')
 PASSWORD = os.environ.get('SQL_PASS')
 # Connect to db
@@ -33,6 +39,11 @@ def sql_setup():
     mycursor.execute(create_bins_table)
     print("Tables are ready!")
 sql_setup()
+
+
+@app.get('/')
+def root():
+    return 'Welcome to the CloseCans server'
 
 
 @app.post("/bins")

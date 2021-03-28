@@ -20,10 +20,12 @@ function BinMarkerCallout(props) {
     <View>
       <Card style={[styles.bubble, styles.roundBorder]}>
         <CardItem header bordered style={[styles.roundBorder]}>
-          <Left>
+          <View flexDirection="column">
             <Text style={styles.headerText}>{createTypeLabel(type)}</Text>
-            <Text>{distance} Feet Away</Text>
-          </Left>
+            <Text style={styles.bodyText}>{distance} Ft Away</Text>
+          </View>
+          <Left></Left>
+          <Body></Body>
           <Right>
             <Button transparent onPress={onClosePress}>
               <Icon
@@ -40,14 +42,14 @@ function BinMarkerCallout(props) {
             <Text style={styles.bodyText}>{createTimeLabel(uploadTime)}</Text>
           </Left>
           <Right>
-            <Button
+            {/* <Button
               transparent
               onPress={() =>
                 alert("Are you certain the bin you found does not exist?")
               }
             >
               <Text style={[styles.bodyText, { color: "red" }]}>Report</Text>
-            </Button>
+            </Button> */}
           </Right>
         </CardItem>
       </Card>
@@ -88,7 +90,7 @@ const styles = StyleSheet.create({
     width: Dimensions.get("window").width - 32,
   },
   headerText: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: "bold",
   },
   bodyText: {

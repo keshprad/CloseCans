@@ -8,7 +8,7 @@ import * as Location from "expo-location";
 import BinMarker from "./BinMarker";
 import BinMarkerCallout from "./BinMarkerCallout";
 
-import { backend_domain } from "../helpers/Helper";
+import { backend_domain, calculateDistance } from "../helpers/Helper";
 
 const sample_bins = [
   {
@@ -102,8 +102,6 @@ function Map(props) {
     }).start();
   };
 
-  let isInit = true;
-
   useEffect(() => {
     (async () => {
       let { status } = await Location.requestPermissionsAsync();
@@ -157,14 +155,6 @@ function Map(props) {
             coordinate={item.coordinates}
             type={item.binType}
             onPress={(e) => {
-              // e.stopPropagation();
-              // _map.current.animateCamera({
-              //   center: {
-              //     latitude: item.coordinates.latitude,
-              //     longitude: item.coordinates.longitude,
-              //   },
-              // });
-
               console.log(cameraRegion);
 
               setCameraRegion({
@@ -202,16 +192,15 @@ function Map(props) {
             onClosePress={() => {
               fadeOut();
             }}
-            distance={calculateDistance()}
+            distance={calculateDistance(pressedBin.coordinate, {
+              latitude: region.latitude,
+              longitude: region.longitude,
+            })}
           ></BinMarkerCallout>
         </Animated.View>
       </View>
     </View>
   );
-}
-
-function calculateDistance() {
-  return 0;
 }
 
 const styles = StyleSheet.create({
@@ -223,14 +212,20 @@ const styles = StyleSheet.create({
   },
   map: {
     width: Dimensions.get("window").width,
-    height: Dimensions.get("window").height,
+    height:
+      Platform.OS === "ios"
+        ? Dimensions.get("window").height - 200
+        : Dimensions.get("window").height - 132,
   },
   roundBorder: {
     borderRadius: 8,
   },
   float: {
     position: "absolute",
-    top: Dimensions.get("window").height - 360,
+    top:
+      Platform.OS === "ios"
+        ? Dimensions.get("window").height - 360
+        : Dimensions.get("window").height - 300,
   },
 });
 

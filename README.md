@@ -1,2 +1,5 @@
 # CloseCans
-React-native app built to find the closest trash cans to properly dispose waste. Built for LAHacks
+
+[Devpost](https://devpost.com/) | Built for [LAHacks](https://lahacks.com)
+
+The app finds waste bins close to the user's current location and plots them on an easy-to-navigate map. We store bin locations and bin types (trash, recycling, compost) in a MySQL db. In addition, we've created a form page where users can note any public trashcans that aren't already on the app.

@@ -1,6 +1,7 @@
 import * as Location from 'expo-location';
 
-export const backend_domain = 'http://localhost:8000';
+export const backend_domain =
+  'https://close-cans-service-o5ls7lw73a-uw.a.run.app/ ';
 
 export const _getLocation = async (locPermission) => {
   let { status } = await Location.requestPermissionsAsync();

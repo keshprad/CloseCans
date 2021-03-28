@@ -58,10 +58,11 @@ export default class AddBin extends Component {
       recycling: formData.recycling,
       compost: formData.compost,
     };
-    const res = await axios.post(`${backend_domain}/add-bin`, {
-      usr_loc: usr_loc,
-      bin_types: bin_types,
-    });
+    // const res = await axios.post(`${backend_domain}/add-bin`, {
+    //   usr_loc: usr_loc,
+    //   bin_types: bin_types,
+    // });
+    this.props.history.push('/');
   };
 
   render() {

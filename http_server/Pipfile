@@ -1,0 +1,17 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+fastapi = "*"
+mysql-connector-python = "==8.0.5"
+uvicorn = "*"
+gunicorn = "*"
+uvloop = "*"
+httptools = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.9"

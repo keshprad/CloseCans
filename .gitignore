@@ -23,3 +23,6 @@ __pycache__/
 
 # Virtual env for http server
 venv/
+
+# SSL
+ssl/
